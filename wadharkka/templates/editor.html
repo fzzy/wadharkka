@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/tiny_mce/jquery.tinymce.js" ></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/editor.js" ></script>
+
+<form method="post" action="http://tinymce.moxiecode.com/dump.php?example=true">
+  <div>
+	<div>
+	  <textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 80%" class="tinymce"></textarea>
+	</div>
+
+	<br />
+	<input type="submit" name="save" value="Submit" />
+	<input type="reset" name="reset" value="Reset" />
+  </div>
+</form>
+{% endblock %}

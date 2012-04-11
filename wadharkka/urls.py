@@ -8,7 +8,7 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('wadharkka.views',
-    url(r'^$', 'home', name='home'),
+    url(r'^$', 'editor', name='editor'),
     # url(r'^wadharkka/', include('wadharkka.foo.urls')),
 )
 
