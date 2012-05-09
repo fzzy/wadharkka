@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-box">
+  <h2>
+	{{ user.username }} 
+	{% if user.first_name and user.last_name %}
+	({{ user.first_name }} {{ user.last_name }})
+	{% endif %}
+  </h2>
+  <table class="table">
+    <tr><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
+    <tr><th>Last login backend:</th> <td>{{ last_login }}</td></tr>
+  </table>
+</div>
+<h2>Documents</h2>
+{% endblock %}
