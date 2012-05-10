@@ -2,7 +2,10 @@
 
 {% block header %}
 <div class="page-header">
-  <h1>Create document</h1>
+  <h1>
+	Create document
+	<a href="{% url done %}" style="float:right" class="btn">Back</a>
+  </h1>
 </div>
 {% endblock %}
 
@@ -25,7 +28,6 @@
 	{{ form.as_p }}
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
-  <a href="{% url done %}" class="btn">Cancel</a>
 </form>
 </p>
 {% endblock %}

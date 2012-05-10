@@ -10,6 +10,14 @@ class Document(models.Model):
     contributors = models.ManyToManyField(User, blank=True, related_name='document_contributors')
     date = models.DateTimeField('date posted', editable=False, auto_now=True)
     
+    VISIBILITY_CHOICES = (
+        ('A', 'All'),
+        ('R', 'Registered only'),
+        ('C', 'Owner and contributors only'),
+        ('O', 'Owner only'),
+    )
+    visibility = models.CharField(max_length=1, choices=VISIBILITY_CHOICES, default='O')
+    
     def __unicode__(self):
         return self.subject
 

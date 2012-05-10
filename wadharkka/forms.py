@@ -10,3 +10,9 @@ class DocumentForm(ModelForm):
             'subject': TextInput(attrs={'class':'span4'}),
             'content': Textarea(),
             }
+
+class SharingForm(ModelForm):
+    class Meta:
+        model = Document
+        fields = ('visibility',)
+

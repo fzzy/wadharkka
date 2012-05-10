@@ -17,6 +17,7 @@ urlpatterns += patterns('wadharkka.views',
     url(r'^document/create/', 'create_document', name='create_document'),
     url(r'^document/edit/(?P<id>\d+)/', 'edit_document', name='edit_document'),
     url(r'^document/show/(?P<id>\d+)/', 'show_document', name='show_document'),
+    url(r'^document/share/(?P<id>\d+)/', 'share_document', name='share_document'),
     url(r'^preview_parser/', 'preview_parser', name='preview_parser'),
 )
 

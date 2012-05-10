@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from social_auth.utils import setting
-from forms import DocumentForm
+from forms import DocumentForm, SharingForm
 from models import Document
 from datetime import datetime
 from utils import parse_md
@@ -89,6 +89,25 @@ def show_document(request, id):
     ctx['doc'].content = parse_md(ctx['doc'].content)
     return render_to_response('show_document.html', ctx, RequestContext(request))
 
+def share_document(request, id):
+    """View for managing sharing of a document"""
+    ctx = default_ctx
+    ctx['success'] = False
+    doc = get_object_or_404(Document, id=id)
+    if request.method == 'POST':
+        form = SharingForm(request.POST)
+        if form.is_valid():
+            doc.visibility = form.cleaned_data['visibility']
+            doc.save()
+            ctx['success'] = True
+    else:        
+        form = SharingForm(instance=doc)
+    ctx['doc'] = doc
+    ctx['form'] = form
+    return render_to_response('share_document.html', ctx, RequestContext(request))
+
+# TODO: fix csrf for this view
+# ensure_csrf_cookie decorator does not work here for some reason...
 @csrf_exempt
 def preview_parser(request):
     if request.method == 'POST':

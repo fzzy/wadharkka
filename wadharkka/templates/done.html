@@ -29,12 +29,6 @@
   <tr>
 	<td><a href="{% url show_document doc.id %}">{{ doc.subject }}</a></td>
 	<td>{{ doc.date }}</td>
-	<td>
-	  <a class="btn" href="{% url show_document doc.id %}">Show</a>
-	  <a class="btn" href="{% url edit_document doc.id %}">Edit</a>
-	  <a class="btn" href="#">Share</a>
-	  <a class="btn" href="#">History</a>
-	</td>
   </tr>
   {% endfor %}
   </tbody>
