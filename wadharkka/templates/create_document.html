@@ -6,6 +6,18 @@
 </div>
 {% endblock %}
 
+{% block scripts %}
+<script type="text/javascript" src="{{ STATIC_URL }}markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/editor.js"></script>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}markitup/skins/markitup/style.css" />
+<style type="text/css">
+  {% include "markitup.css" %}
+</style>
+{% endblock %}
+
 {% block content %}
 <p>
 <form class="well" action="{% url create_document %}" method="post">{% csrf_token %}
