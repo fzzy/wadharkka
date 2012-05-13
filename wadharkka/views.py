@@ -85,7 +85,7 @@ def edit_document(request, id):
     """Edit an existing document"""
     doc = get_object_or_404(Document, id=id)
     if request.method == 'POST':
-        form = DocumentForm(request.POST)
+        form = DocumentForm(request.POST, instance=doc)
         if form.is_valid():
             form.save()
             return redirect('show_document', id)
@@ -126,18 +126,15 @@ def share_document(request, id):
         if not isinstance(emails, list):
             emails = [emails]
         emails_pass = True
+        emailsv = []
+        # remove empty or errorneous emails
         for a in emails:
-            # skip empty fields
-            if len(a) <= 0:
+            if len(a) <= 0 and not validate_email(a):
                 continue
-            if not validate_email(a):
-                emails_pass = False
-                # TODO: add proper error message for the user
-                break
+            emailsv.append(a)
         if visibility_form.is_valid() and emails_pass:
             doc.visibility = visibility_form.cleaned_data['visibility']
-            print "EE",emails
-            doc.contributors = User.objects.filter(email__in=emails)
+            doc.contributors = User.objects.filter(email__in=emailsv)
             doc.save()
             ctx['success'] = True
     else:
