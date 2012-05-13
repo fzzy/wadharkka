@@ -3,8 +3,12 @@
 {% block header %}
 <div class="page-header">
   <h1>
+	{% if doc %}
 	Edit document: {{ doc.subject }}
 	<a href="{% url show_document doc.id %}" style="float:right" class="btn">Show document</a>
+	{% else %}
+	Create document
+	{% endif %}
   </h1>
 </div>
 {% endblock %}
@@ -22,7 +26,8 @@
 
 {% block content %}
 <p>
-<form class="well" action="{% url edit_document doc.id %}" method="post">{% csrf_token %}
+<form class="well" action="{% if doc %}{% url edit_document doc.id %}
+						   {% else %}{% url create_document %}{% endif%}" method="post">{% csrf_token %}
   {{ form.as_p }}
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

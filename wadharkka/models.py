@@ -30,9 +30,9 @@ class Revision(models.Model):
     date = models.DateTimeField('date posted', editable=False)
     
     def __unicode__(self):
-        return self.document+": "+self.date
+        return self.document + ": " + self.date
 
     class Admin:
         pass
-
 '''
+

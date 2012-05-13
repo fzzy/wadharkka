@@ -81,16 +81,27 @@ def create_document(request):
     return render_to_response('create_document.html', ctx, RequestContext(request))
 
 @login_required
-def edit_document(request, id):
-    """Edit an existing document"""
-    doc = get_object_or_404(Document, id=id)
-    if request.user != doc.owner and not doc.contributors.filter(id=request.user.id).exists():
-        raise Http404
+def edit_document(request, id=None):
+    """Edit a document"""
+    if id is None:
+        doc = None
+    else:
+        doc = get_object_or_404(Document, id=id)
+        if request.user != doc.owner and not doc.contributors.filter(id=request.user.id).exists():
+            raise Http404
     if request.method == 'POST':
         form = DocumentForm(request.POST, instance=doc)
         if form.is_valid():
-            form.save()
-            return redirect('show_document', id)
+            doc = form.save(commit=False)
+            # owner is not set when creating a new document
+            try:
+                doc_owner = doc.owner
+            except User.DoesNotExist:
+                doc_owner =None
+            if doc_owner is None:
+                doc.owner = request.user
+            doc.save()
+            return redirect('show_document', doc.id)
     else:        
         form = DocumentForm(instance=doc)
     ctx = default_ctx
