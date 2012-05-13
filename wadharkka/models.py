@@ -23,9 +23,8 @@ class Document(models.Model):
 
     class Admin:
         pass
-
 '''
-class Diff(models.Model):
+class Revision(models.Model):
     document = models.ForeignKey(Document)
     diff = models.TextField()
     date = models.DateTimeField('date posted', editable=False)
@@ -35,4 +34,5 @@ class Diff(models.Model):
 
     class Admin:
         pass
+
 '''

@@ -1,0 +1,8 @@
+<div style="float:right" class="btn-group">
+  {% if user == doc.owner %}
+  <a class="btn" href="{% url delete_document doc.id %}">Delete</a>
+  <a class="btn" href="{% url share_document doc.id %}">Share</a>
+  {% endif %}
+  <a class="btn" href="{% url edit_document doc.id %}">Edit</a>
+  <a class="btn" href="#">History</a>
+</div>

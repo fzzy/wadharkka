@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.contrib.auth import logout as auth_logout
@@ -47,14 +47,14 @@ def logout(request):
 def done(request):
     """Login complete view, displays owned documents"""
     ctx = default_ctx
-    ctx['owned_docs'] = Document.objects.filter(owner=request.user).values('id', 'subject', 'date')
+    ctx['docs'] = Document.objects.filter(owner=request.user)
     return render_to_response('done.html', ctx, RequestContext(request))
 
 @login_required
 def shared_documents(request):
     """Display shared documents"""
     ctx = default_ctx
-    ctx['shared_docs'] = Document.objects.filter(owner=request.user).values('id', 'subject', 'date')
+    ctx['docs'] = request.user.document_contributors.all()
     return render_to_response('shared_documents.html', ctx, RequestContext(request))
 
 @login_required
@@ -84,6 +84,8 @@ def create_document(request):
 def edit_document(request, id):
     """Edit an existing document"""
     doc = get_object_or_404(Document, id=id)
+    if request.user != doc.owner and not doc.contributors.filter(id=request.user.id).exists():
+        raise Http404
     if request.method == 'POST':
         form = DocumentForm(request.POST, instance=doc)
         if form.is_valid():
@@ -100,6 +102,8 @@ def edit_document(request, id):
 def delete_document(request, id):
     """Delete a document"""
     doc = get_object_or_404(Document, id=id)
+    if request.user != doc.owner:
+        raise Http404
     if request.method == 'POST':
         doc.delete()
         return redirect('done')
@@ -114,9 +118,10 @@ def show_document(request, id):
     if not \
             (doc.visibility == 'A' or \
             (doc.visibility == 'R' and request.user.is_authenticated()) or \
-            (doc.visibility == 'C' and (doc.owner==request.user or request.user in doc.contributors)) or \
-            (doc.visibility == 'O' and doc.owner==request.user)):
-        return render_to_response('error_permission.html', ctx, RequestContext(request))
+            (doc.visibility == 'C' and \
+                 (doc.owner==request.user or doc.contributors.filter(id=request.user.id).exists())) or \
+            (doc.visibility == 'O' and doc.owner.id==request.user.id)):
+        raise Http404
     ctx['doc'] = doc
     ctx['doc'].content = parse_md(doc.content)
     return render_to_response('show_document.html', ctx, RequestContext(request))
@@ -125,6 +130,8 @@ def show_document(request, id):
 def share_document(request, id):
     """View for managing sharing of a document"""
     doc = get_object_or_404(Document, id=id)
+    if request.user != doc.owner:
+        raise Http404
     ctx = default_ctx
     ctx['success'] = False
     if request.method == 'POST':
@@ -134,9 +141,9 @@ def share_document(request, id):
             emails = [emails]
         emails_pass = True
         emailsv = []
-        # remove empty or errorneous emails
+        # remove owner email, empty or errorneous emails
         for a in emails:
-            if len(a) <= 0 and not validate_email(a):
+            if doc.owner.email==a or len(a) <= 0 or not validate_email(a):
                 continue
             emailsv.append(a)
         if visibility_form.is_valid() and emails_pass:

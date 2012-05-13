@@ -21,9 +21,11 @@
         <div class="container">
           <a class="brand" href="{% url home %}">{{ APP_NAME }}</a>
           <ul class="nav">
+			{% if user.is_authenticated %}
             <li><a href="{% url done %}">Your documents</a></li>
 			<li><a href="{% url shared_documents %}">Shared documents</a></li>
 			<li><a href="{% url profile %}">Profile</a></li>
+			{% endif %}
 			<li><a href="{% url admin:index %}">Admin</a></li>
           </ul>
 		  {% if user.is_authenticated %}

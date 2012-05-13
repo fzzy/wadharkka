@@ -18,18 +18,12 @@
 	</tr>
   </thead>
   <tbody>
-	{% for doc in owned_docs %}
+	{% for doc in docs %}
 	<tr>
 	  <td><a href="{% url show_document doc.id %}">{{ doc.subject }}</a></td>
 	  <td>{{ doc.date }}</td>
 	  <td>
-		<div style="float:right" class="btn-group">
-		  <a class="btn" href="{% url show_document doc.id %}">Show</a>
-		  <a class="btn" href="{% url edit_document doc.id %}">Edit</a>
-		  <a class="btn" href="{% url share_document doc.id %}">Share</a>
-		  <a class="btn" href="#">History</a>
-		  <a class="btn" href="{% url delete_document doc.id %}">Delete</a>
-		</div>
+		{% include "document_buttons.html" %}
 	  </td>
 	</tr>
 	{% endfor %}

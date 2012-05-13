@@ -9,6 +9,24 @@
 {% endblock%}
 
 {% block content %}
-<p></p>
+<table class="table table-striped">
+  <thead>
+	<tr>
+	  <th>Subject</th>
+	  <th>Date</th>
+	</tr>
+  </thead>
+  <tbody>
+	{% for doc in docs %}
+	<tr>
+	  <td><a href="{% url show_document doc.id %}">{{ doc.subject }}</a></td>
+	  <td>{{ doc.date }}</td>
+	  <td>
+		{% include "document_buttons.html" %}
+	  </td>
+	</tr>
+	{% endfor %}
+  </tbody>
+</table>
 {% endblock %}
 
