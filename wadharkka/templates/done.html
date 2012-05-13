@@ -1,22 +1,15 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="hero-box">
-  <h2>
-	{{ user.username }} 
-	{% if user.first_name and user.last_name %}
-	({{ user.first_name }} {{ user.last_name }})
-	{% endif %}
-  </h2>
-  <table class="table">
-    <tr><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
-    <tr><th>Last login backend:</th> <td>{{ last_login }}</td></tr>
-  </table>
+{% block header %}
+<div class="page-header">
+  <h1>
+	Your documents
+	<a class="btn" style="float: right" rel="nofollow" href="{% url create_document %}">Create document</a>
+  </h1>
 </div>
-<h1>
-  Your documents
-  <a class="btn" style="float: right" rel="nofollow" href="{% url create_document %}">Create document</a>
-</h1>
+{% endblock%}
+
+{% block content %}
 <table class="table table-striped">
   <thead>
 	<tr>
@@ -25,14 +18,21 @@
 	</tr>
   </thead>
   <tbody>
-  {% for doc in owned_docs %}
-  <tr>
-	<td><a href="{% url show_document doc.id %}">{{ doc.subject }}</a></td>
-	<td>{{ doc.date }}</td>
-  </tr>
-  {% endfor %}
+	{% for doc in owned_docs %}
+	<tr>
+	  <td><a href="{% url show_document doc.id %}">{{ doc.subject }}</a></td>
+	  <td>{{ doc.date }}</td>
+	  <td>
+		<div style="float:right" class="btn-group">
+		  <a class="btn" href="{% url show_document doc.id %}">Show</a>
+		  <a class="btn" href="{% url edit_document doc.id %}">Edit</a>
+		  <a class="btn" href="{% url share_document doc.id %}">Share</a>
+		  <a class="btn" href="#">History</a>
+		  <a class="btn" href="{% url delete_document doc.id %}">Delete</a>
+		</div>
+	  </td>
+	</tr>
+	{% endfor %}
   </tbody>
 </table>
-<h1>Documents shared with you</h1>
-<p></p>
 {% endblock %}

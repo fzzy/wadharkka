@@ -4,10 +4,12 @@
 <div class="page-header">
   <h1>
 	{{ doc.subject }}
-	<a class="btn" style="float:right" href="{% url done %}">Back</a>
-	<a class="btn" style="float:right" href="{% url edit_document doc.id %}">Edit</a>
-	<a class="btn" style="float:right" href="{% url share_document doc.id %}">Share</a>
-	<a class="btn" style="float:right" href="#">History</a>
+	<div style="float:right" class="btn-group">
+	  <a class="btn" href="{% url edit_document doc.id %}">Edit</a>
+	  <a class="btn" href="{% url share_document doc.id %}">Share</a>
+	  <a class="btn" href="#">History</a>
+	  <a class="btn" href="{% url delete_document doc.id %}">Delete</a>
+	</div>
   </h1>
 </div>
 {% endblock %}

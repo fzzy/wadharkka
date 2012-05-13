@@ -42,6 +42,6 @@
 				{name:'Preview', call:'preview', className:"preview"}
 			]
 		}
-	$('textarea').markItUp(markdownSettings);
+		$('#id_content').markItUp(markdownSettings);
 	});
 }).call(this);

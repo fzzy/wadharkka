@@ -4,21 +4,41 @@
 <div class="page-header">
   <h1>
 	Sharing: {{ doc.subject }}
-	<a href="{% url show_document doc.id %}" style="float:right" class="btn">Back</a>
+	<a href="{% url show_document doc.id %}" style="float:right" class="btn">Show document</a>
   </h1>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.multiFieldExtender.js"></script>
+<script type="text/javascript">
+  var initial_conemails = {{ conemails|safe }};
+</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/share.js"></script>
 {% endblock %}
 
 {% block content %}
 <p>
 <form class="well" action="{% url share_document doc.id %}" method="post">{% csrf_token %}
-  <div>
-	{{ form.as_p }}
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-  {% if success %}
-  <span class="alert alert-success">Settings updated successfully!</span>
-  {% endif %}
+  {{ visibility_form.as_p }}
+  <p>
+	Contributor email addresses:
+  </p>
+  <p>
+	<fieldset id="conemails">
+	  <input recname="conemails" name="conemails" type="text"/>
+	</fieldset>
+  </p>
+  <p>
+	Add contributor email addresses above to share your document.
+	Given non-contributor emails addresses will be ignored.
+  </p>
+  <p>
+	<button type="submit" class="btn btn-primary">Update</button>
+	{% if success %}
+	<span class="alert alert-success">Settings updated successfully!</span>
+	{% endif %}
+  </p>
 </form>
 </p>
 {% endblock %}

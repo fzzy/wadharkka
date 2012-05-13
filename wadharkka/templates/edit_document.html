@@ -4,17 +4,26 @@
 <div class="page-header">
   <h1>
 	Edit document: {{ doc.subject }}
-	<a href="{% url show_document doc.id %}" style="float:right" class="btn">Back</a>
+	<a href="{% url show_document doc.id %}" style="float:right" class="btn">Show document</a>
   </h1>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ STATIC_URL }}markdown/jquery.markitup.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/editor.js"></script>
+{% endblock %}
+
+{% block styles %}
+<style type="text/css">
+  {% include "markitup.css" %}
+</style>
 {% endblock %}
 
 {% block content %}
 <p>
 <form class="well" action="{% url edit_document doc.id %}" method="post">{% csrf_token %}
-  <div>
-	{{ form.as_p }}
-  </div>
+  {{ form.as_p }}
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </p>

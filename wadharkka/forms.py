@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
-from django.forms import ModelForm, TextInput, Textarea
-from models import Document 
+from django import forms
+from models import Document
 
-class DocumentForm(ModelForm):
+class DocumentForm(forms.ModelForm):
+    """Form for editing a document"""
     class Meta:
         model = Document
         fields = ('subject', 'content')
         widgets = {
-            'subject': TextInput(attrs={'class':'span4'}),
-            'content': Textarea(),
+            'subject': forms.TextInput(attrs={'class':'span4'}),
+            'content': forms.Textarea(),
             }
 
-class SharingForm(ModelForm):
+class VisibilityForm(forms.ModelForm):
+    """Form for managing visibility option of a document"""
     class Meta:
         model = Document
         fields = ('visibility',)
+
 

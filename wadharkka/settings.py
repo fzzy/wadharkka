@@ -153,7 +153,6 @@ SOCIAL_AUTH_DEFAULT_USERNAME = 'new_user'
 # wadharkka
 APP_NAME = "wadharkka"
 
-
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.
