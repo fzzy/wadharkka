@@ -110,8 +110,15 @@ def delete_document(request, id):
 def show_document(request, id):
     """Show contents of a document"""
     ctx = default_ctx
-    ctx['doc'] = get_object_or_404(Document, id=id)
-    ctx['doc'].content = parse_md(ctx['doc'].content)
+    doc = get_object_or_404(Document, id=id)
+    if not \
+            (doc.visibility == 'A' or \
+            (doc.visibility == 'R' and request.user.is_authenticated()) or \
+            (doc.visibility == 'C' and (doc.owner==request.user or request.user in doc.contributors)) or \
+            (doc.visibility == 'O' and doc.owner==request.user)):
+        return render_to_response('error_permission.html', ctx, RequestContext(request))
+    ctx['doc'] = doc
+    ctx['doc'].content = parse_md(doc.content)
     return render_to_response('show_document.html', ctx, RequestContext(request))
 
 @login_required
