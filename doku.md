@@ -78,6 +78,8 @@ Yksikkötestit sijaitsevat tests.py tiedostossa ja ne voi ajaa komennolla
 Heroku
 ------
 
+http://fierce-dawn-8749.herokuapp.com/
+
 Ylläpitopaneelin tunnukset:
 käyttäjänimi: testi123
 salasana:  123qwe
