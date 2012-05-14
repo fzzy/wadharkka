@@ -67,6 +67,7 @@ Havaitut bugit
 + Cross site scripting -esto on poistettu Markitdown javascript editorin preview nappulan näkymästä, koska en saanut sitä toimimaan ilman javascriptiin kajoamista.
 + Ylläpitopaneelin automaattisesti generoidut lomakkeet eivät validoi aina oikein tai muutenkaan ole kovinkaan hiottuja.
 + Postgresql bugailee ihmeellisesti herokussa joten asetin oletuksena sqlite3 tietokannan. Tietokantaa voi vaihtaa settings.py:stä.
++ DEBUG-moodia ei kannata kytkeä pois koska staattisen tiedostojen palvelua ei ole konfiguroitu sen pois päällä ollessa.
 
 Testit
 ------
@@ -80,3 +81,19 @@ Heroku
 Ylläpitopaneelin tunnukset:
 käyttäjänimi: testi123
 salasana:  123qwe
+
+Asennusohjeet lokaalisti
+------------------------
+
+# git clone git@github.com:fzzbt/wadharkka.git
+# cd wadharkka/wadharkka
+
+Tietokannan voi konfiguroida DATABASEa muuttelemalla.
+
+Asenna tarvittavat python2 paketit pip:llä.
+(Voi olla järkevää käyttää virtualenviä
+kts. heroku-ohjeet https://devcenter.heroku.com/articles/django)
+
+# pip install   Django==1.4 distribute==0.6.24  django-social-auth==0.6.9 httplib2==0.7.4 misaka==1.0.2  oauth2==1.5.211 psycopg2==2.4.4 python-openid==2.2.5 wsgiref==0.1.2
+
+pip on joillakin systeemeissä pip2 tai pip-2.7 tms.
