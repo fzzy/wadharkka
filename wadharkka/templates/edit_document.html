@@ -40,10 +40,11 @@
   {{ form.as_p }}
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+{% if diff_warning %}
 </p>
 <h3>Current content:</h3>
 <pre>
   {{ cur_content }}
 </pre>
-
+{% endif %}
 {% endblock %}
