@@ -91,6 +91,7 @@ Asennusohjeet lokaalisti
     cd wadharkka/wadharkka
 
 Tietokannan voi konfiguroida DATABASEa muuttelemalla.
+Oletusasetukset pitäisi toimia kunhan sqlite on asennettuna.
 
 Asenna tarvittavat python2 paketit pip:llä.
 (Voi olla järkevää käyttää virtualenviä
