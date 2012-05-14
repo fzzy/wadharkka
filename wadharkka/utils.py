@@ -10,6 +10,7 @@ def parse_md(data):
         render_flags=m.HTML_SKIP_HTML|m.HTML_TOC|m.HTML_SAFELINK)
 
 def validate_email(email):
+    """Return True on valid given email address, otherwise False"""
     if email_re.match(email):
         return True
     return False

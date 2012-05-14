@@ -1,23 +1,18 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.api import get_messages
-from django.contrib.auth import authenticate, login
-from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
-from django.forms.models import modelformset_factory
 from social_auth.utils import setting
 from django.contrib.auth.models import User
 from django.forms.models import formset_factory
 from forms import DocumentForm, VisibilityForm
 from models import Document
-from datetime import datetime
 from utils import parse_md, validate_email
 import difflib
-import pickle
 import json
 import copy
 import settings
@@ -101,7 +96,7 @@ def edit_document(request, id=None):
             cur_content = doc.content
         form = DocumentForm(request.POST, instance=doc)
         if form.is_valid():
-            if cur_revision==form.cleaned_data['revision']:
+            if cur_revision == form.cleaned_data['revision']:
                 new_doc = form.save(commit=False)
                 # update revision
                 new_doc.revision = cur_revision + 1
@@ -140,7 +135,7 @@ def show_document(request, id):
     if not (doc.visibility == 'A' or 
             (doc.visibility == 'R' and request.user.is_authenticated()) or
             (doc.visibility == 'C' and 
-             (doc.owner==request.user or doc.contributors.filter(id=request.user.id).exists()))):
+             (doc.owner == request.user or doc.contributors.filter(id=request.user.id).exists()))):
         raise Http404
     ctx['doc'] = doc
     ctx['doc'].content = parse_md(doc.content)
@@ -156,14 +151,14 @@ def share_document(request, id):
     ctx['success'] = False
     if request.method == 'POST':
         visibility_form = VisibilityForm(request.POST, instance=doc)
-        emails = request.POST.getlist('conemails',[])
+        emails = request.POST.getlist('conemails', [])
         if not isinstance(emails, list):
             emails = [emails]
         emails_pass = True
         emailsv = []
         # remove owner email, empty or errorneous emails
         for a in emails:
-            if doc.owner.email==a or len(a) <= 0 or not validate_email(a):
+            if doc.owner.email == a or len(a) <= 0 or not validate_email(a):
                 continue
             emailsv.append(a)
         if visibility_form.is_valid() and emails_pass:
