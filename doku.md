@@ -66,7 +66,7 @@ Havaitut bugit
 + Javascript-palikka dokumenttien jakamislomakkeessa generoi epävalidia HTMLää.
 + Cross site scripting -esto on poistettu Markitdown javascript editorin preview nappulan näkymästä, koska en saanut sitä toimimaan ilman javascriptiin kajoamista.
 + Ylläpitopaneelin automaattisesti generoidut lomakkeet eivät validoi aina oikein tai muutenkaan ole kovinkaan hiottuja.
-+ Postgresql bugailee ihmeellisesti herokussa joten käyän oletuksena sqlite3:sta. Tietokantaa voi vaihtaa settings.py:stä.
++ Postgresql bugailee ihmeellisesti herokussa joten asetin oletuksena sqlite3 tietokannan. Tietokantaa voi vaihtaa settings.py:stä.
 
 Testit
 ------
