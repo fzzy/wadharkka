@@ -97,7 +97,8 @@ def edit_document(request, id=None):
         cur_revision = doc.revision
     if request.method == 'POST':
         # giving doc to the form may change its contents, so copy them now
-        cur_content = doc.content
+        if doc is not None:
+            cur_content = doc.content
         form = DocumentForm(request.POST, instance=doc)
         if form.is_valid():
             if cur_revision==form.cleaned_data['revision']:

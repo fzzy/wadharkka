@@ -73,3 +73,10 @@ Testit
 Yksikkötestit sijaitsevat tests.py tiedostossa ja ne voi ajaa komennolla 
 
     ./manage.py test wadharkka
+
+Heroku
+------
+
+Ylläpitopaneelin tunnukset:
+käyttäjänimi: testi123
+salasana:  123qwe
