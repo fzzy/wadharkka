@@ -49,7 +49,7 @@ Toteutetut ominaisuudet
 -----------------------
 + Käyttäjien tunnistus OpenIDllä (tai tunnistus ja rekistöröinti ylläpito-paneelin kautta)
 + Dokumenttien luonti ja muokkaus
-+ Dokumenttien jakaminen muiden käyttäjien kesken
++ Dokumenttien jakaminen muiden käyttäjien kesken email-osoitteiden perusteellay
 + WYSIWYG-Markdown editori
 + Samanaikaisten muokkauksien konfliktitilanteiden hallinta
 + Yksikkötestejä djangon testimoduuleilla
