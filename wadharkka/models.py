@@ -9,30 +9,14 @@ class Document(models.Model):
     owner = models.ForeignKey(User, related_name='document_owner')
     contributors = models.ManyToManyField(User, blank=True, related_name='document_contributors')
     date = models.DateTimeField('date posted', editable=False, auto_now=True)
-    
+    revision = models.IntegerField(default=0, editable=False)
+
     VISIBILITY_CHOICES = (
         ('A', 'All'),
         ('R', 'Registered only'),
         ('C', 'Owner and contributors only'),
-        ('O', 'Owner only'),
     )
-    visibility = models.CharField(max_length=1, choices=VISIBILITY_CHOICES, default='O')
+    visibility = models.CharField(max_length=1, choices=VISIBILITY_CHOICES, default='A')
     
     def __unicode__(self):
         return self.subject
-
-    class Admin:
-        pass
-'''
-class Revision(models.Model):
-    document = models.ForeignKey(Document)
-    diff = models.TextField()
-    date = models.DateTimeField('date posted', editable=False)
-    
-    def __unicode__(self):
-        return self.document + ": " + self.date
-
-    class Admin:
-        pass
-'''
-

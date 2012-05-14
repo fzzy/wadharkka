@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="page-header">
+  <h1>
+	History: {{ doc.subject }}
+  </h1>
+</div>
+{% endblock%}
+
+{% block content %}
+<table class="table table-striped">
+  <thead>
+	<tr>
+	  <th>Date</th>
+	</tr>
+  </thead>
+  <tbody>
+	{% for r in revisions %}
+	<tr>
+	  <td><a href="{% url show_document r.document.id %}">{{ r.date }}</a></td>
+	</tr>
+	{% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+

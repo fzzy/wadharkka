@@ -25,6 +25,15 @@
 {% endblock %}
 
 {% block content %}
+{% if diff_warning %}
+<p class="alert">
+  Someone edited this document during your editing!
+</p>
+<h3>Differences:</h3>
+<pre>
+  {{ diff }}
+</pre>
+{% endif %}
 <p>
 <form class="well" action="{% if doc %}{% url edit_document doc.id %}
 						   {% else %}{% url create_document %}{% endif%}" method="post">{% csrf_token %}
@@ -32,4 +41,9 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </p>
+<h3>Current content:</h3>
+<pre>
+  {{ cur_content }}
+</pre>
+
 {% endblock %}

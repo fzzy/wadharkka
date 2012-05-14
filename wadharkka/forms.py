@@ -4,6 +4,8 @@ from models import Document
 
 class DocumentForm(forms.ModelForm):
     """Form for editing a document"""
+    revision = forms.IntegerField(widget=forms.HiddenInput())
+    
     class Meta:
         model = Document
         fields = ('subject', 'content')
